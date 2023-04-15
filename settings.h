@@ -33,3 +33,5 @@ const float BONUS_SPEED = 10.f;
 const int BONUS_RANGE = 10000;
 const int BONUS_CHANCE = 5000;
 const std::string MULTI_LASER_BONUS_FILE_NAME = "images\\bonus_shots.png";
+const size_t HEAL = 1;
+

@@ -3,7 +3,7 @@
 
 class Bonus {
 public:
-	enum BonusType { MULTI_LASER, HP, SHIELD };
+	enum BonusType { MULTI_LASER, HP, SHIELD, BONUSES_TYPE_QTY};
 	Bonus(BonusType type, sf::Vector2f position);
 	void update();
 	void draw(sf::RenderWindow& window);
@@ -14,7 +14,6 @@ public:
 	bool offScreen();
 	void act(Player& player);
 
-
 private:
 	sf::Sprite sprite;
 	sf::Texture texture;
@@ -23,22 +22,22 @@ private:
 };
 
 Bonus::Bonus(BonusType type, sf::Vector2f position) {
+	this->type = type;
 	switch (type) {
 	case HP:
-		this->type = type;
 		texture.loadFromFile("images\\bonus_pill.png");
-		sprite.setTexture(texture);
-		sprite.setPosition(position);
 		break;
 
 	case MULTI_LASER:
-		this->type = type;
 		texture.loadFromFile(MULTI_LASER_BONUS_FILE_NAME);
-		sprite.setTexture(texture);
-		sprite.setPosition(position);
+		break;
+
+	case SHIELD:
+		texture.loadFromFile("images\\bonus_shield.png");
 		break;
 	}
-
+	sprite.setTexture(texture);
+	sprite.setPosition(position);
 }
 
 
@@ -67,6 +66,9 @@ void Bonus::act(Player& player) {
 	case MULTI_LASER:
 		player.activateThreeLasers();
 		break;
-	}
-	
+
+	case SHIELD:
+		player.activateShield();
+		break;
+	}	
 }

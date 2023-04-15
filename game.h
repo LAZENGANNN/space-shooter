@@ -51,8 +51,9 @@ private:
 					meteor->spawn();
 					laser->setHit();
 					int chance = rand() % BONUS_RANGE;
+					size_t bonusType = rand() % Bonus::BonusType::BONUSES_TYPE_QTY;
 					if (chance < BONUS_CHANCE) {
-						Bonus* bonus = new Bonus((Bonus::BonusType)0,meteor->getPosition());
+						Bonus* bonus = new Bonus((Bonus::BonusType)bonusType,meteor->getPosition());
 						bonusSprites.push_back(bonus);
 					}
 				}
@@ -62,9 +63,8 @@ private:
 			for (auto& bonus : bonusSprites) {
 				sf::FloatRect bonusHitBox = bonus->getHitBox();
 				if (bonusHitBox.intersects(playerHitBox)) {
-					bonus->act(player);
 					bonus->setDel();
-
+					bonus->act(player);
 				}
 			}
 		}
@@ -87,6 +87,7 @@ private:
 		for (auto& bonus : bonusSprites) {
 			bonus->draw(window);
 		}
+
 		window.display();
 	}
 
