@@ -3,22 +3,14 @@
 #include "laser.h"
 #include <list>
 #include "textobj.h"
+#include "shield.h"
 
 class Player {
-private:
-	sf::Sprite sprite;
-	sf::Texture texture;
-	float speedx = 0.f;
-	int lives = 3;
-	std::list<Laser*> lasers;
-	int hp = 100;
-	TextObj hpText;
-	sf::FloatRect bounds;
-	sf::Clock timer;
-	bool threeLasers = false;
 
 public:
-	Player() : hpText(std::to_string(hp), sf::Vector2f(0.f, 0.f)) {
+	Player() : hpText(std::to_string(hp), sf::Vector2f(0.f, 0.f)),
+		shield(getCenterPosition())
+	{
 		texture.loadFromFile(PLAYER_FILE_NAME);
 		sprite.setTexture(texture);
 		bounds = sprite.getGlobalBounds();
@@ -30,6 +22,7 @@ public:
 	}
 
 	void update() {
+		bounds = sprite.getGlobalBounds();
 		speedx = 0.f;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 			speedx = -8;
@@ -54,14 +47,20 @@ public:
 			laser->update();
 		}
 		hpText.update("HP:" + std::to_string(hp));
+		shield.setPosition(getCenterPosition());
+
 	}
 
 	void draw(sf::RenderWindow& window) {
 		window.draw(sprite);
+		if (shield.isActive()) {
+			shield.draw(window);
+		}
 		for (auto laser : lasers) {
 			window.draw(laser->getSprite());
 		}
 		window.draw(hpText.getText());
+
 	}
 
 	int getLives() { return lives; }
@@ -75,8 +74,8 @@ public:
 			Laser* l = new Laser(laserPos);
 			lasers.push_back(l);
 			if (threeLasers) {
-				sf::Vector2f leftLaserPos{ laserPos.x - PLAYER_WIDTH/2, laserPos.y + bounds.width/2 };
-				sf::Vector2f rightLaserPos{ laserPos.x + PLAYER_WIDTH/2, laserPos.y + bounds.width / 2 };
+				sf::Vector2f leftLaserPos{ laserPos.x - PLAYER_WIDTH / 2, laserPos.y + bounds.width / 2 };
+				sf::Vector2f rightLaserPos{ laserPos.x + PLAYER_WIDTH / 2, laserPos.y + bounds.width / 2 };
 				Laser* lL = new Laser(leftLaserPos);
 				Laser* rL = new Laser(rightLaserPos);
 				lasers.push_back(lL);
@@ -97,8 +96,32 @@ public:
 	void activateThreeLasers() { threeLasers = true; }
 	void deactivateThreeLasers() { threeLasers = false; }
 
-	void heal() { 
-		hp += 50;
-		//hp = hp % 100;
+	int getHp() { return hp; }
+	/*void decLives() { lives--; }*/
+
+	void heal() {
+		hp += HEAL;
+		if (hp > 100) {
+			hp = 100;
+		}
 	}
+	void activateShield() {
+		shield.activate();
+	}
+	sf::Vector2f getCenterPosition();
+
+private:
+	sf::Sprite sprite;
+	sf::Texture texture;
+	float speedx = 0.f;
+	int lives = 3;
+	std::list<Laser*> lasers;
+	int hp = 100;
+	TextObj hpText;
+	sf::FloatRect bounds;
+	sf::Clock timer;
+	bool threeLasers = false;
+	Shield shield;
 };
+
+sf::Vector2f Player::getCenterPosition() { return sf::Vector2f(bounds.left + bounds.width/2,bounds.top + bounds.height/2); }
