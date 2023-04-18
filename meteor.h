@@ -52,5 +52,3 @@ std::string Meteor::mFileNames[] = { "images\\meteorBrown_big1.png", "images\\me
 "images\\meteorBrown_med2.png", "images\\meteorBrown_small1.png", "images\\meteorBrown_small2.png", "images\\meteorBrown_tiny1.png",
 "images\\meteorBrown_tiny2.png" };
 int Meteor::mDamage[] = { 30,30,20,20,10,10,5,5 };
-
-

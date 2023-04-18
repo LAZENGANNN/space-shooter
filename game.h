@@ -53,7 +53,7 @@ private:
 					int chance = rand() % BONUS_RANGE;
 					size_t bonusType = rand() % Bonus::BonusType::BONUSES_TYPE_QTY;
 					if (chance < BONUS_CHANCE) {
-						Bonus* bonus = new Bonus((Bonus::BonusType)bonusType,meteor->getPosition());
+						Bonus* bonus = new Bonus((Bonus::BonusType)bonusType, meteor->getPosition());
 						bonusSprites.push_back(bonus);
 					}
 				}
@@ -75,6 +75,16 @@ private:
 		bonusSprites.remove_if([](Bonus* bonus) {return bonus->isToDel(); });
 
 	}
+	void gameOverRect() {
+		sf::Sprite gameOver;
+		sf::Texture tex;
+		tex.loadFromFile("images\\gameOver.png");
+		gameOver.setTexture(tex);
+		if (player.getHp() <= 0) {
+			window.clear();
+			window.draw(gameOver);
+		}
+	}
 
 	void draw() {
 		window.clear();
@@ -87,8 +97,9 @@ private:
 		for (auto& bonus : bonusSprites) {
 			bonus->draw(window);
 		}
-
+		gameOverRect();
 		window.display();
+
 	}
 
 public:
@@ -106,7 +117,7 @@ public:
 	}
 
 	void play() {
-		while (window.isOpen() && player.isAlive())
+		while (window.isOpen()/* && player.isAlive()*/)
 		{
 			checkEvents();
 			update();

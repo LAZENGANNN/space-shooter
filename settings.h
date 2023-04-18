@@ -14,7 +14,7 @@ const float  ROAD_LANE_WIDTH = 75.f;
 
 const float PLAYER_WIDTH = 99.f;
 const float PLAYER_HEIGHT = 75.f;
-const sf::Vector2f PLAYER_START_POS{ (WINDOW_WIDTH - PLAYER_WIDTH) / 2.f, WINDOW_HEIGHT- PLAYER_HEIGHT - 10};
+const sf::Vector2f PLAYER_START_POS{ (WINDOW_WIDTH - PLAYER_WIDTH) / 2.f, WINDOW_HEIGHT - PLAYER_HEIGHT - 10 };
 const float PLAYER_SPEEDX = 10.f;
 std::string PLAYER_FILE_NAME = "images\\playerShip1_green.png";
 const int INITIAL_HP = 100;
@@ -34,4 +34,3 @@ const int BONUS_RANGE = 10000;
 const int BONUS_CHANCE = 5000;
 const std::string MULTI_LASER_BONUS_FILE_NAME = "images\\bonus_shots.png";
 const size_t HEAL = 1;
-

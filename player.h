@@ -124,4 +124,4 @@ private:
 	Shield shield;
 };
 
-sf::Vector2f Player::getCenterPosition() { return sf::Vector2f(bounds.left + bounds.width/2,bounds.top + bounds.height/2); }
+sf::Vector2f Player::getCenterPosition() { return sf::Vector2f(bounds.left + bounds.width / 2, bounds.top + bounds.height / 2); }

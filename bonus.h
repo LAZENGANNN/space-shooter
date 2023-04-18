@@ -3,7 +3,7 @@
 
 class Bonus {
 public:
-	enum BonusType { MULTI_LASER, HP, SHIELD, BONUSES_TYPE_QTY};
+	enum BonusType { MULTI_LASER, HP, SHIELD, BONUSES_TYPE_QTY };
 	Bonus(BonusType type, sf::Vector2f position);
 	void update();
 	void draw(sf::RenderWindow& window);
@@ -70,5 +70,5 @@ void Bonus::act(Player& player) {
 	case SHIELD:
 		player.activateShield();
 		break;
-	}	
+	}
 }
